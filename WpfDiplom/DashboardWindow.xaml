@@ -14,7 +14,7 @@
         <SolidColorBrush x:Key="WhiteBrush" Color="White"/>
         <SolidColorBrush x:Key="BorderBrush" Color="#E0E6ED"/>
 
-        <!-- Стиль кнопок бокового меню (отступ слева увеличен до 40) -->
+        <!-- Стиль кнопок бокового меню -->
         <Style TargetType="Button" x:Key="MenuButton">
             <Setter Property="Height" Value="45"/>
             <Setter Property="FontSize" Value="14"/>
@@ -25,7 +25,6 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Padding" Value="40,0,0,0"/>
-            <!-- Увеличено до 40 -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -111,10 +110,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ================== Боковая панель ================== -->
+        <!-- Боковая панель -->
         <Border Grid.Column="0" Background="{StaticResource PrimaryBrush}">
             <StackPanel>
-                <!-- Название системы -->
                 <TextBlock Text="БАНК «СТАНДАРТ»"
                            FontSize="18" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}"
@@ -126,7 +124,6 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,25"/>
 
-                <!-- Меню -->
                 <Button Content="📊 Рабочий стол" Style="{StaticResource MenuButton}"
                         Background="#2C5282" FontWeight="Bold"/>
                 <Button x:Name="BtnClients" Content="👥 Клиенты" Style="{StaticResource MenuButton}"/>
@@ -137,7 +134,7 @@
             </StackPanel>
         </Border>
 
-        <!-- ================== Рабочая область ================== -->
+        <!-- Рабочая область -->
         <Grid Grid.Column="1" Background="{StaticResource BackgroundBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -145,7 +142,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Верхняя панель с приветствием и быстрыми действиями -->
+            <!-- Верхняя панель -->
             <Border Grid.Row="0" Background="White" Padding="20" Margin="10,10,10,5"
                     CornerRadius="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
                 <Border.Effect>
@@ -161,17 +158,18 @@
                                    Margin="0,4,0,0"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <Button Content="➕ Новый клиент" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
+                        <!-- ВАЖНО: у кнопки должен быть x:Name -->
+                        <Button x:Name="BtnAddClient" Content="➕ Новый клиент" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
                         <Button Content="🔎 Быстрый поиск" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
                         <Button Content="📥 Импорт реестра" Style="{StaticResource ActionButton}"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Центральная область с карточками дашборда -->
+            <!-- Центральная область с карточками -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <WrapPanel Margin="10,5,10,10" Orientation="Horizontal">
-                    <!-- Карточка 1: Новые клиенты сегодня -->
+                    <!-- Карточки -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Новые клиенты сегодня"
@@ -184,8 +182,6 @@
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
-
-                    <!-- Карточка 2: Ожидают верификации -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="На проверке"
@@ -198,8 +194,6 @@
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
-
-                    <!-- Карточка 3: Просроченные документы -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Просроченные документы"
@@ -212,8 +206,6 @@
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
-
-                    <!-- Карточка 4: Всего клиентов -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Всего клиентов"

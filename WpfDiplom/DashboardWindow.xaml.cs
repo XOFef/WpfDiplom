@@ -7,14 +7,20 @@ namespace WpfDiplom
         public DashboardWindow()
         {
             InitializeComponent();
-            BtnClients.Click += (s, e) => OpenClientList();
-        }
 
-        private void OpenClientList()
-        {
-            ClientListWindow clientWindow = new ClientListWindow();
-            clientWindow.Show();          // немодальное окно
-            // clientWindow.ShowDialog(); // или модальное, зависит от задачи
+            // Открытие списка клиентов
+            BtnClients.Click += (s, e) =>
+            {
+                ClientListWindow clientList = new ClientListWindow();
+                clientList.Show();
+            };
+
+            // Открытие окна добавления клиента
+            BtnAddClient.Click += (s, e) =>
+            {
+                AddEditClientWindow addWindow = new AddEditClientWindow();
+                addWindow.ShowDialog();
+            };
         }
     }
 }
