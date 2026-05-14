@@ -1,0 +1,289 @@
+﻿<Window x:Class="WpfDiplom.SearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Расширенный поиск | Банк «Стандарт»" Height="650" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="550" MinWidth="900"
+        Background="#F5F7FA">
+    <Window.Resources>
+        <!-- Цвета -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#1E3A5F"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#D4AF37"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F7FA"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="LightTextBrush" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#E0E6ED"/>
+        <SolidColorBrush x:Key="ButtonBrush" Color="#2C5282"/>
+        <SolidColorBrush x:Key="ButtonHoverBrush" Color="#3A6EA5"/>
+
+        <!-- Стиль кнопки -->
+        <Style TargetType="Button" x:Key="SimpleButton">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Поле ввода фильтра -->
+        <Style TargetType="TextBox" x:Key="FilterInput">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- ComboBox фильтра -->
+        <Style TargetType="ComboBox" x:Key="FilterCombo">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <!-- DatePicker без опасных свойств -->
+        <Style TargetType="DatePicker" x:Key="FilterDate">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- Стиль таблицы -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="ColumnHeaderHeight" Value="32"/>
+            <Setter Property="RowHeight" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="Transparent" BorderThickness="0">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Border Grid.Row="0" CornerRadius="6" Margin="0,0,0,10" Height="52">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#1E3A5F" Offset="0"/>
+                    <GradientStop Color="#2C5282" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="14,0">
+                <TextBlock Text="Расширенный поиск клиентов" 
+                           Foreground="White" FontSize="18" FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Закрыть" Style="{StaticResource SimpleButton}"
+                            Background="#95A5A6" Click="BtnClose_Click">
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="Background" Color="#95A5A6"/>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Панель фильтров -->
+        <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="1" CornerRadius="6" Padding="14" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0" Margin="0,0,0,8">
+                    <!-- ФИО / Название -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="ФИО / Название" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchName" Style="{StaticResource FilterInput}" Width="180"/>
+                    </StackPanel>
+                    <!-- ИНН -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="ИНН" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchInn" Style="{StaticResource FilterInput}" Width="140"/>
+                    </StackPanel>
+                    <!-- Паспортные данные -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Паспорт (серия/номер)" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchPassport" Style="{StaticResource FilterInput}" Width="160"/>
+                    </StackPanel>
+                    <!-- Телефон -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Телефон" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchPhone" Style="{StaticResource FilterInput}" Width="140"/>
+                    </StackPanel>
+                    <!-- Email -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Email" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchEmail" Style="{StaticResource FilterInput}" Width="180"/>
+                    </StackPanel>
+                    <!-- ОГРН -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="ОГРН" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchOgrn" Style="{StaticResource FilterInput}" Width="140"/>
+                    </StackPanel>
+                    <!-- Адрес -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Адрес (фрагмент)" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchAddress" Style="{StaticResource FilterInput}" Width="200"/>
+                    </StackPanel>
+                </WrapPanel>
+
+                <WrapPanel Grid.Row="1">
+                    <!-- Тип клиента -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Тип клиента" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="CmbType" Style="{StaticResource FilterCombo}" Width="130" SelectedIndex="0">
+                            <ComboBoxItem Content="Все"/>
+                            <ComboBoxItem Content="Физ. лицо"/>
+                            <ComboBoxItem Content="Юр. лицо"/>
+                            <ComboBoxItem Content="ИП"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <!-- Статус -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Статус" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="CmbStatus" Style="{StaticResource FilterCombo}" Width="130" SelectedIndex="0">
+                            <ComboBoxItem Content="Все"/>
+                            <ComboBoxItem Content="Активен"/>
+                            <ComboBoxItem Content="Заблокирован"/>
+                            <ComboBoxItem Content="На проверке"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <!-- Город -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Город" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <TextBox x:Name="TxtSearchCity" Style="{StaticResource FilterInput}" Width="120"/>
+                    </StackPanel>
+                    <!-- Отделение -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Отделение" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="CmbBranch" Style="{StaticResource FilterCombo}" Width="150" SelectedIndex="0">
+                            <ComboBoxItem Content="Все"/>
+                            <ComboBoxItem Content="Центральное"/>
+                            <ComboBoxItem Content="Северное"/>
+                            <ComboBoxItem Content="Южное"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <!-- Диапазон дат регистрации -->
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="Дата регистрации с" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <DatePicker x:Name="DtRegFrom" Style="{StaticResource FilterDate}" Width="130"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,15,8">
+                        <TextBlock Text="по" FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,0,0,2"/>
+                        <DatePicker x:Name="DtRegTo" Style="{StaticResource FilterDate}" Width="130"/>
+                    </StackPanel>
+                    <!-- Кнопки -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8" VerticalAlignment="Bottom">
+                        <Button Content="🔍 Найти" Style="{StaticResource SimpleButton}"
+                                Click="BtnSearch_Click" Margin="0,0,8,0"/>
+                        <Button Content="Очистить" Style="{StaticResource SimpleButton}"
+                                Background="#95A5A6" Click="BtnClear_Click">
+                            <Button.Resources>
+                                <SolidColorBrush x:Key="Background" Color="#95A5A6"/>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </WrapPanel>
+            </Grid>
+        </Border>
+
+        <!-- Таблица результатов -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Grid.Row="0" x:Name="SearchResultsGrid"
+                      IsReadOnly="True" AutoGenerateColumns="False"
+                      SelectionMode="Single" SelectionUnit="FullRow"
+                      Margin="0,0,0,8">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="60" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Тип" Width="80" Binding="{Binding Type}"/>
+                    <DataGridTextColumn Header="ФИО / Наименование" Width="200" Binding="{Binding FullName}"/>
+                    <DataGridTextColumn Header="ИНН / Паспорт" Width="140" Binding="{Binding InnPassport}"/>
+                    <DataGridTextColumn Header="Дата регистрации" Width="120" Binding="{Binding RegDate}"/>
+                    <DataGridTextColumn Header="Статус" Width="100" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Менеджер" Width="150" Binding="{Binding Manager}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Кнопки при выделенной строке -->
+            <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="4" Padding="10">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="👁 Просмотр карточки" Style="{StaticResource SimpleButton}"
+                            x:Name="BtnViewCard" Click="BtnViewCard_Click"/>
+                    <Button Content="✏ Редактировать" Style="{StaticResource SimpleButton}"
+                            Click="BtnEdit_Click"/>
+                    <Button Content="🗑 Удалить" Style="{StaticResource SimpleButton}"
+                            Background="#C0392B" Click="BtnDelete_Click">
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="Background" Color="#C0392B"/>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

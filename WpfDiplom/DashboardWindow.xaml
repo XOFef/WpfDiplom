@@ -127,10 +127,10 @@
                 <Button Content="📊 Рабочий стол" Style="{StaticResource MenuButton}"
                         Background="#2C5282" FontWeight="Bold"/>
                 <Button x:Name="BtnClients" Content="👥 Клиенты" Style="{StaticResource MenuButton}"/>
-                <Button Content="🔍 Поиск" Style="{StaticResource MenuButton}"/>
-                <Button Content="📈 Отчёты" Style="{StaticResource MenuButton}"/>
-                <Button Content="⚙️ Администрирование" Style="{StaticResource MenuButton}"/>
-                <Button Content="👤 Настройки профиля" Style="{StaticResource MenuButton}"/>
+                <Button x:Name="BtnSearch" Content="🔍 Поиск" Style="{StaticResource MenuButton}"/>
+                <Button x:Name="BtnReports" Content="📈 Отчёты" Style="{StaticResource MenuButton}"/>
+                <Button x:Name="BtnAdmin" Content="⚙️ Администрирование" Style="{StaticResource MenuButton}"/>
+                <Button x:Name="BtnProfile" Content="👤 Настройки профиля" Style="{StaticResource MenuButton}"/>
             </StackPanel>
         </Border>
 
@@ -160,7 +160,7 @@
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <!-- ВАЖНО: у кнопки должен быть x:Name -->
                         <Button x:Name="BtnAddClient" Content="➕ Новый клиент" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
-                        <Button Content="🔎 Быстрый поиск" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
+                        <Button x:Name="BtnQuickSearch" Content="🔎 Быстрый поиск" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
                         <Button Content="📥 Импорт реестра" Style="{StaticResource ActionButton}"/>
                     </StackPanel>
                 </Grid>

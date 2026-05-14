@@ -1,0 +1,203 @@
+﻿<Window x:Class="WpfDiplom.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Администрирование | Банк «Стандарт»" Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="600" MinWidth="950"
+        Background="#F0F2F5">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#1E3A5F"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#D0D5DD"/>
+        <SolidColorBrush x:Key="ButtonBrush" Color="#2C5282"/>
+        <SolidColorBrush x:Key="DeleteBrush" Color="#C0392B"/>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}"
+                CornerRadius="4" Padding="12" Margin="0,0,0,8">
+            <Grid>
+                <TextBlock Text="Администрирование системы" Foreground="White"
+                           FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Content="Закрыть" Width="80" Height="30"
+                        Background="#95A5A6" Foreground="White" BorderThickness="0"
+                        FontSize="13" HorizontalAlignment="Right"
+                        Click="BtnClose_Click"/>
+            </Grid>
+        </Border>
+
+        
+        <TabControl Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1" Padding="5">
+            
+            <TabItem Header="👥 Пользователи">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+                        <Button Content="➕ Добавить" Width="100" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnAddUser_Click"/>
+                        <Button Content="✏ Редактировать" Width="110" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnEditUser_Click"/>
+                        <Button Content="🔑 Сброс пароля" Width="120" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnResetPassword_Click"/>
+                        <Button Content="🚫 Заблокировать" Width="120" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource DeleteBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnBlockUser_Click"/>
+                    </StackPanel>
+                    <DataGrid Grid.Row="1" x:Name="UsersGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" SelectionMode="Single"
+                              BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                              RowHeaderWidth="0" ColumnHeaderHeight="28" RowHeight="26"
+                              FontSize="13" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding FullName}"/>
+                            <DataGridTextColumn Header="Должность" Width="120" Binding="{Binding Position}"/>
+                            <DataGridTextColumn Header="Роль" Width="120" Binding="{Binding Role}"/>
+                            <DataGridTextColumn Header="Отделение" Width="130" Binding="{Binding Branch}"/>
+                            <DataGridTextColumn Header="Активен" Width="80" Binding="{Binding IsActive}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            
+            <TabItem Header="🔑 Роли и права">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+                        <ComboBox Width="150" Height="28" VerticalContentAlignment="Center"
+                                  SelectedIndex="0" x:Name="CmbRoles">
+                            <ComboBoxItem Content="Оператор"/>
+                            <ComboBoxItem Content="Менеджер"/>
+                            <ComboBoxItem Content="Руководитель"/>
+                            <ComboBoxItem Content="Администратор"/>
+                        </ComboBox>
+                        <Button Content="Сохранить права" Width="130" Height="28" Margin="8,0,0,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnSaveRights_Click"/>
+                    </StackPanel>
+                    <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                            CornerRadius="2" Padding="10" Background="White">
+                        <StackPanel>
+                            <TextBlock Text="Доступ к модулям" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <CheckBox Content="Клиенты (просмотр)" Margin="0,0,0,3" IsChecked="True"/>
+                            <CheckBox Content="Клиенты (создание/редактирование)" Margin="0,0,0,3"/>
+                            <CheckBox Content="Клиенты (удаление)" Margin="0,0,0,3"/>
+                            <CheckBox Content="Отчёты" Margin="0,0,0,3"/>
+                            <CheckBox Content="Администрирование" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            
+            <TabItem Header="📚 Справочники">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+                        <ComboBox Width="180" Height="28" VerticalContentAlignment="Center"
+                                  SelectedIndex="0" x:Name="CmbDictionaryType">
+                            <ComboBoxItem Content="Отделения"/>
+                            <ComboBoxItem Content="Типы документов"/>
+                            <ComboBoxItem Content="Источники привлечения"/>
+                            <ComboBoxItem Content="Статусы клиентов"/>
+                            <ComboBoxItem Content="Орг.-правовые формы"/>
+                        </ComboBox>
+                        <Button Content="➕ Добавить" Width="90" Height="28" Margin="8,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnAddDict_Click"/>
+                        <Button Content="✏ Редактировать" Width="110" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnEditDict_Click"/>
+                        <Button Content="🗑 Удалить" Width="90" Height="28"
+                                Background="{StaticResource DeleteBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnDeleteDict_Click"/>
+                    </StackPanel>
+                    <DataGrid Grid.Row="1" x:Name="DictionaryGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" SelectionMode="Single"
+                              BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                              RowHeaderWidth="0" ColumnHeaderHeight="28" RowHeight="26"
+                              FontSize="13" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Width="100" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            
+            <TabItem Header="📋 Аудит действий">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.Row="0" Margin="0,0,0,8">
+                        <StackPanel Margin="0,0,10,5">
+                            <TextBlock Text="Пользователь" FontSize="12" Foreground="#555" Margin="0,0,0,2"/>
+                            <ComboBox Width="130" Height="28" x:Name="CmbAuditUser" SelectedIndex="0">
+                                <ComboBoxItem Content="Все"/>
+                                <ComboBoxItem Content="admin"/>
+                                <ComboBoxItem Content="petrova"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,5">
+                            <TextBlock Text="Дата с" FontSize="12" Foreground="#555" Margin="0,0,0,2"/>
+                            <DatePicker Width="130" Height="28" x:Name="DtAuditFrom"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,5">
+                            <TextBlock Text="по" FontSize="12" Foreground="#555" Margin="0,0,0,2"/>
+                            <DatePicker Width="130" Height="28" x:Name="DtAuditTo"/>
+                        </StackPanel>
+                        <Button Content="🔍 Найти" Width="80" Height="28" Margin="0,0,5,0"
+                                Background="{StaticResource ButtonBrush}" Foreground="White"
+                                BorderThickness="0" Click="BtnAuditSearch_Click"/>
+                        <Button Content="Очистить" Width="80" Height="28"
+                                Background="#95A5A6" Foreground="White" BorderThickness="0"
+                                Click="BtnAuditClear_Click"/>
+                    </WrapPanel>
+                    <DataGrid Grid.Row="1" x:Name="AuditGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" SelectionMode="Single"
+                              BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                              RowHeaderWidth="0" ColumnHeaderHeight="28" RowHeight="26"
+                              FontSize="13" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Дата/время" Width="140" Binding="{Binding DateTime}"/>
+                            <DataGridTextColumn Header="Пользователь" Width="120" Binding="{Binding User}"/>
+                            <DataGridTextColumn Header="Действие" Width="180" Binding="{Binding Action}"/>
+                            <DataGridTextColumn Header="Объект" Width="150" Binding="{Binding Object}"/>
+                            <DataGridTextColumn Header="Старое значение" Width="150" Binding="{Binding OldValue}"/>
+                            <DataGridTextColumn Header="Новое значение" Width="150" Binding="{Binding NewValue}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
