@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using WpfDiplom.Data.Context;
+using WpfDiplom.Data.Entities;
 
 namespace WpfDiplom
 {
@@ -7,50 +11,31 @@ namespace WpfDiplom
         public DashboardWindow()
         {
             InitializeComponent();
+            LoadDashboardData();
 
-            // Открытие списка клиентов
-            BtnClients.Click += (s, e) =>
-            {
-                ClientListWindow clientList = new ClientListWindow();
-                clientList.Show();
-            };
+            BtnClients.Click += (s, e) => { new ClientListWindow().Show(); };
+            BtnSearch.Click += (s, e) => { new SearchWindow().Show(); };
+            BtnReports.Click += (s, e) => { new ReportsWindow().Show(); };
+            BtnAdmin.Click += (s, e) => { new AdminWindow().Show(); };
+            BtnProfile.Click += (s, e) => { new ProfileWindow().ShowDialog(); };
+            BtnAddClient.Click += (s, e) => { new AddEditClientWindow().ShowDialog(); LoadDashboardData(); };
+            BtnQuickSearch.Click += (s, e) => { new QuickSearchWindow().Show(); };
+        }
 
-            // Открытие окна добавления клиента
-            BtnAddClient.Click += (s, e) =>
+        private void LoadDashboardData()
+        {
+            using (var db = new AppDbContext())
             {
-                AddEditClientWindow addWindow = new AddEditClientWindow();
-                addWindow.ShowDialog();
-            };
-
-            BtnSearch.Click += (s, e) =>
-            {
-                SearchWindow search = new SearchWindow();
-                search.Show();        // немодально, как и список клиентов
-            };
-
-            BtnReports.Click += (s, e) =>
-            {
-                ReportsWindow reports = new ReportsWindow();
-                reports.Show();   // немодально, как и другие дочерние окна
-            };
-
-            BtnAdmin.Click += (s, e) =>
-            {
-                AdminWindow admin = new AdminWindow();
-                admin.Show();   // немодально
-            };
-
-            BtnProfile.Click += (s, e) =>
-            {
-                ProfileWindow profile = new ProfileWindow();
-                profile.ShowDialog();   // модально, чтобы не отвлекаться
-            };
-
-            BtnQuickSearch.Click += (s, e) =>
-            {
-                QuickSearchWindow quickSearch = new QuickSearchWindow();
-                quickSearch.Show();   // немодально
-            };
+                var today = DateTime.Today;
+                TxtNewToday.Text = db.Clients.Count(c => c.RegDate.Date == today).ToString();
+                TxtNewTodayInfo.Text = db.Clients.Count(c => c.RegDate.Date == today) == 0 ? "Нет данных" : $"+{db.Clients.Count(c => c.RegDate.Date == today)} сегодня";
+                TxtOnCheck.Text = db.Clients.Count(c => c.Status == "На проверке").ToString();
+                TxtOnCheckInfo.Text = db.Clients.Count(c => c.Status == "На проверке") == 0 ? "Нет заявок" : $"Требуют проверки: {db.Clients.Count(c => c.Status == "На проверке")}";
+                TxtExpiredDocs.Text = db.Passports.Count(p => p.IssueDate < DateTime.Now.AddYears(-10)).ToString();
+                TxtExpiredDocsInfo.Text = db.Passports.Count(p => p.IssueDate < DateTime.Now.AddYears(-10)) == 0 ? "Нет" : $"У {db.Passports.Count(p => p.IssueDate < DateTime.Now.AddYears(-10))} клиентов";
+                TxtTotalClients.Text = db.Clients.Count().ToString();
+                TxtActiveClients.Text = $"Активных: {db.Clients.Count(c => c.Status == "Активен")}";
+            }
         }
     }
 }

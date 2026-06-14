@@ -158,7 +158,6 @@
                                    Margin="0,4,0,0"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <!-- ВАЖНО: у кнопки должен быть x:Name -->
                         <Button x:Name="BtnAddClient" Content="➕ Новый клиент" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
                         <Button x:Name="BtnQuickSearch" Content="🔎 Быстрый поиск" Style="{StaticResource ActionButton}" Margin="0,0,10,0"/>
                         <Button Content="📥 Импорт реестра" Style="{StaticResource ActionButton}"/>
@@ -169,55 +168,63 @@
             <!-- Центральная область с карточками -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <WrapPanel Margin="10,5,10,10" Orientation="Horizontal">
-                    <!-- Карточки -->
+
+                    <!-- Карточка: Новые клиенты сегодня -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Новые клиенты сегодня"
                                        FontSize="13" Foreground="{StaticResource LightTextBrush}"/>
-                            <TextBlock Text="0"
+                            <TextBlock x:Name="TxtNewToday" Text="0"
                                        FontSize="36" FontWeight="Bold"
                                        Foreground="{StaticResource PrimaryBrush}"
                                        Margin="0,8,0,0"/>
-                            <TextBlock Text="Нет данных"
+                            <TextBlock x:Name="TxtNewTodayInfo" Text="Нет данных"
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
+
+                    <!-- Карточка: На проверке -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="На проверке"
                                        FontSize="13" Foreground="{StaticResource LightTextBrush}"/>
-                            <TextBlock Text="0"
+                            <TextBlock x:Name="TxtOnCheck" Text="0"
                                        FontSize="36" FontWeight="Bold"
                                        Foreground="#E67E22"
                                        Margin="0,8,0,0"/>
-                            <TextBlock Text="Нет заявок"
+                            <TextBlock x:Name="TxtOnCheckInfo" Text="Нет заявок"
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
+
+                    <!-- Карточка: Просроченные документы -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Просроченные документы"
                                        FontSize="13" Foreground="{StaticResource LightTextBrush}"/>
-                            <TextBlock Text="0"
+                            <TextBlock x:Name="TxtExpiredDocs" Text="0"
                                        FontSize="36" FontWeight="Bold"
                                        Foreground="#C0392B"
                                        Margin="0,8,0,0"/>
-                            <TextBlock Text="Нет"
+                            <TextBlock x:Name="TxtExpiredDocsInfo" Text="Нет"
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
+
+                    <!-- Карточка: Всего клиентов -->
                     <Border Style="{StaticResource DashboardCard}" Width="280" Height="140">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Всего клиентов"
                                        FontSize="13" Foreground="{StaticResource LightTextBrush}"/>
-                            <TextBlock Text="0"
+                            <TextBlock x:Name="TxtTotalClients" Text="0"
                                        FontSize="36" FontWeight="Bold"
                                        Foreground="{StaticResource PrimaryBrush}"
                                        Margin="0,8,0,0"/>
-                            <TextBlock Text="Активных: 0"
+                            <TextBlock x:Name="TxtActiveClients" Text="Активных: 0"
                                        FontSize="11" Foreground="{StaticResource LightTextBrush}" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
+
                 </WrapPanel>
             </ScrollViewer>
 

@@ -15,7 +15,6 @@
         <SolidColorBrush x:Key="ButtonBrush" Color="#2C5282"/>
         <SolidColorBrush x:Key="ButtonHoverBrush" Color="#3A6EA5"/>
 
-        <!-- Простая плоская кнопка -->
         <Style TargetType="Button" x:Key="SimpleButton">
             <Setter Property="Height" Value="32"/>
             <Setter Property="FontSize" Value="13"/>
@@ -43,7 +42,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Стиль для секций -->
         <Style TargetType="Border" x:Key="SectionBorder">
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="4"/>
@@ -53,7 +51,6 @@
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
-        <!-- Заголовок секции -->
         <Style TargetType="TextBlock" x:Key="SectionHeader">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -61,7 +58,6 @@
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
 
-        <!-- Простой DataGrid -->
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
@@ -95,24 +91,23 @@
                 CornerRadius="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
             <Grid>
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <TextBlock Text="Иванов Иван Иванович" FontSize="18" FontWeight="Bold"
+                    <TextBlock x:Name="TxtFullNameHeader" Text="Клиент" FontSize="18" FontWeight="Bold"
                                Foreground="{StaticResource PrimaryBrush}"/>
-                    <TextBlock Text="ID: 1423 | Физ. лицо | Активен" FontSize="12"
+                    <TextBlock x:Name="TxtIdAndType" Text="ID: -- | Тип | Статус" FontSize="12"
                                Foreground="{StaticResource LightTextBrush}" Margin="0,2,0,0"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Content="✏ Редактировать" Style="{StaticResource SimpleButton}"/>
-                    <Button Content="🗑 Удалить" Style="{StaticResource SimpleButton}" Background="#C0392B">
+                    <Button x:Name="BtnEdit" Content="✏ Редактировать" Style="{StaticResource SimpleButton}"/>
+                    <Button x:Name="BtnDelete" Content="🗑 Удалить" Style="{StaticResource SimpleButton}" Background="#C0392B">
                         <Button.Resources>
                             <SolidColorBrush x:Key="Background" Color="#C0392B"/>
                         </Button.Resources>
                     </Button>
-                    <Button Content="✖ Закрыть" Style="{StaticResource SimpleButton}"/>
+                    <Button x:Name="BtnClose" Content="✖ Закрыть" Style="{StaticResource SimpleButton}"/>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- Основная область с прокруткой -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10,0,10,10">
             <StackPanel>
                 <!-- 1. Общая информация -->
@@ -126,32 +121,32 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                 <TextBlock Text="Фамилия:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Иванов" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtLastName" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Имя:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Иван" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtFirstName" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Отчество:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Иванович" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtMiddleName" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Дата рождения:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="15.03.1985" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtBirthDate" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Место рождения:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="г. Москва" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtBirthPlace" Text="—" FontSize="14" Margin="0,2,0,8"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="Гражданство:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Российская Федерация" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtCitizenship" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Пол:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Мужской" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtGender" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Телефон:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="+7 (926) 123-45-67" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtPhone" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Email:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="ivanov@example.com" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtEmail" Text="—" FontSize="14" Margin="0,2,0,8"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
                 </Border>
 
-                <!-- 2. Паспортные данные -->
-                <Border Style="{StaticResource SectionBorder}">
+                <!-- 2. Паспортные данные (только для физлиц и ИП) -->
+                <Border x:Name="PanelPassport" Style="{StaticResource SectionBorder}" Visibility="Collapsed">
                     <StackPanel>
                         <TextBlock Text="🛂 Паспортные данные" Style="{StaticResource SectionHeader}"/>
                         <Grid>
@@ -161,19 +156,19 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                 <TextBlock Text="Тип документа:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Паспорт РФ" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocType" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Серия:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="45 12" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocSeries" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Номер:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="345678" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocNumber" Text="—" FontSize="14" Margin="0,2,0,8"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="Дата выдачи:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="20.05.2010" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocIssueDate" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Кем выдан:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="ОВД «Ленинский» г. Москвы" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocIssuer" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Код подразделения:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="123-456" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtDocCode" Text="—" FontSize="14" Margin="0,2,0,8"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -183,14 +178,14 @@
                 <Border Style="{StaticResource SectionBorder}">
                     <StackPanel>
                         <TextBlock Text="📁 Документы" Style="{StaticResource SectionHeader}"/>
-                        <Button Content="📤 Загрузить файл" Style="{StaticResource SimpleButton}"
+                        <Button x:Name="BtnUploadFile" Content="📤 Загрузить файл" Style="{StaticResource SimpleButton}"
                                 HorizontalAlignment="Left" Margin="0,0,0,8"/>
-                        <DataGrid IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid x:Name="DocumentsGrid" IsReadOnly="True" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="Тип" Width="130" Binding="{Binding Type}"/>
-                                <DataGridTextColumn Header="Дата загрузки" Width="110" Binding="{Binding Date}"/>
-                                <DataGridTextColumn Header="Кто загрузил" Width="140" Binding="{Binding User}"/>
+                                <DataGridTextColumn Header="Дата загрузки" Width="110" Binding="{Binding UploadDate}"/>
+                                <DataGridTextColumn Header="Кто загрузил" Width="140" Binding="{Binding UploadedByFullName}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
@@ -200,15 +195,15 @@
                 <Border Style="{StaticResource SectionBorder}">
                     <StackPanel>
                         <TextBlock Text="💰 Счета и продукты" Style="{StaticResource SectionHeader}"/>
-                        <Button Content="➕ Открыть новый счёт" Style="{StaticResource SimpleButton}"
+                        <Button x:Name="BtnOpenAccount" Content="➕ Открыть новый счёт" Style="{StaticResource SimpleButton}"
                                 HorizontalAlignment="Left" Margin="0,0,0,8"/>
-                        <DataGrid IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid x:Name="AccountsGrid" IsReadOnly="True" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Номер счёта" Width="*" Binding="{Binding AccountNum}"/>
+                                <DataGridTextColumn Header="Номер счёта" Width="*" Binding="{Binding AccountNumber}"/>
                                 <DataGridTextColumn Header="Тип" Width="120" Binding="{Binding AccountType}"/>
                                 <DataGridTextColumn Header="Валюта" Width="70" Binding="{Binding Currency}"/>
-                                <DataGridTextColumn Header="Остаток" Width="100" Binding="{Binding Balance}"/>
-                                <DataGridTextColumn Header="Дата открытия" Width="110" Binding="{Binding OpenDate}"/>
+                                <DataGridTextColumn Header="Остаток" Width="100" Binding="{Binding Balance, StringFormat={}{0:N2}}"/>
+                                <DataGridTextColumn Header="Дата открытия" Width="110" Binding="{Binding OpenDate, StringFormat=d}"/>
                                 <DataGridTextColumn Header="Статус" Width="90" Binding="{Binding Status}"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -219,17 +214,16 @@
                 <Border Style="{StaticResource SectionBorder}">
                     <StackPanel>
                         <TextBlock Text="🕐 История взаимодействий" Style="{StaticResource SectionHeader}"/>
-                        <TextBox Height="50" Margin="0,0,0,6" TextWrapping="Wrap" AcceptsReturn="True"
-                                 VerticalScrollBarVisibility="Auto"
-                                 BorderBrush="{StaticResource BorderBrush}" FontSize="13" Padding="6"/>
-                        <Button Content="Добавить заметку" Style="{StaticResource SimpleButton}"
+                        <TextBox x:Name="TxtNewNote" Height="50" Margin="0,0,0,6" TextWrapping="Wrap" AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto" BorderBrush="{StaticResource BorderBrush}" FontSize="13" Padding="6"/>
+                        <Button x:Name="BtnAddNote" Content="➕ Добавить заметку" Style="{StaticResource SimpleButton}"
                                 HorizontalAlignment="Right" Margin="0,0,0,6"/>
-                        <DataGrid IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid x:Name="HistoryGrid" IsReadOnly="True" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Дата" Width="110" Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Дата" Width="110" Binding="{Binding Date, StringFormat=d}"/>
                                 <DataGridTextColumn Header="Тип" Width="110" Binding="{Binding Type}"/>
                                 <DataGridTextColumn Header="Содержание" Width="*" Binding="{Binding Content}"/>
-                                <DataGridTextColumn Header="Автор" Width="130" Binding="{Binding Author}"/>
+                                <DataGridTextColumn Header="Автор" Width="130" Binding="{Binding AuthorName}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
@@ -246,19 +240,19 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                 <TextBlock Text="Статус резидентства:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Резидент" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtResidentStatus" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="VIP-признак:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Нет" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtVip" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Источник привлечения:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Рекомендация" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtSource" Text="—" FontSize="14" Margin="0,2,0,8"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="Персональный менеджер:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Петрова Анна Викторовна" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtManager" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Дата регистрации:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="10.01.2020" FontSize="14" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="TxtRegDate" Text="—" FontSize="14" Margin="0,2,0,8"/>
                                 <TextBlock Text="Статус клиента:" Foreground="{StaticResource LightTextBrush}" FontSize="13"/>
-                                <TextBlock Text="Активен" FontSize="14" Margin="0,2,0,8" Foreground="#27AE60"/>
+                                <TextBlock x:Name="TxtClientStatus" Text="—" FontSize="14" Margin="0,2,0,8" Foreground="#27AE60"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>

@@ -5,7 +5,7 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="650" MinWidth="1050">
     <Window.Resources>
-        <!-- Кисти, общие с главным окном -->
+        <!-- Базовые кисти -->
         <SolidColorBrush x:Key="PrimaryBrush" Color="#1E3A5F"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#D4AF37"/>
         <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F7FA"/>
@@ -13,6 +13,50 @@
         <SolidColorBrush x:Key="LightTextBrush" Color="#7F8C8D"/>
         <SolidColorBrush x:Key="WhiteBrush" Color="White"/>
         <SolidColorBrush x:Key="BorderBrush" Color="#E0E6ED"/>
+
+        <!-- Переопределение стандартных цветов выделения -->
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#E8F0FE"/>
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#1E3A5F"/>
+
+        <!-- Стиль строки DataGrid -->
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E8F0FE"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F7FA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль ячейки DataGrid -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Foreground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E8F0FE"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <!-- Стиль кнопок действий -->
         <Style TargetType="Button" x:Key="ActionButton">
@@ -35,8 +79,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="4">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               Margin="{TemplateBinding Padding}"/>
@@ -58,7 +101,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Стиль кнопок пагинации (маленькие) -->
+        <!-- Стиль кнопок пагинации -->
         <Style TargetType="Button" x:Key="PageButton">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="30"/>
@@ -71,8 +114,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="4">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
@@ -86,7 +128,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Стиль TextBox для фильтров -->
+        <!-- Поле ввода -->
         <Style TargetType="TextBox" x:Key="FilterTextBox">
             <Setter Property="Height" Value="32"/>
             <Setter Property="FontSize" Value="13"/>
@@ -98,7 +140,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Стиль ComboBox для фильтров -->
+        <!-- Выпадающий список -->
         <Style TargetType="ComboBox" x:Key="FilterComboBox">
             <Setter Property="Height" Value="32"/>
             <Setter Property="FontSize" Value="13"/>
@@ -110,7 +152,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Стиль DataGrid -->
+        <!-- Стиль таблицы -->
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
@@ -123,6 +165,8 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
         </Style>
+
+        <!-- Стиль заголовков колонок -->
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -130,19 +174,6 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Padding" Value="8,0"/>
             <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <Style TargetType="DataGridCell">
-            <Setter Property="Padding" Value="8,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="DataGridCell">
-                        <Border Background="Transparent"
-                                BorderThickness="0">
-                            <ContentPresenter VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
     </Window.Resources>
 
@@ -164,7 +195,7 @@
                                FontSize="12" Foreground="{StaticResource LightTextBrush}" Margin="0,2,0,0"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Content="➕ Добавить клиента" Style="{StaticResource ActionButton}"/>
+                    <Button x:Name="BtnAddClient" Content="➕ Добавить клиента" Style="{StaticResource ActionButton}"/>
                     <Button Content="📥 Импорт CSV/Excel" Style="{StaticResource ActionButton}"/>
                     <Button Content="📤 Экспорт" Style="{StaticResource ActionButton}"/>
                 </StackPanel>
@@ -177,8 +208,7 @@
             <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" ItemWidth="Auto">
                 <TextBlock Text="Тип:" VerticalAlignment="Center" Margin="0,0,5,0"
                            Foreground="{StaticResource TextBrush}" FontSize="13"/>
-                <ComboBox Style="{StaticResource FilterComboBox}" Width="120" Margin="0,0,15,0"
-                          SelectedIndex="0">
+                <ComboBox x:Name="CmbFilterType" Style="{StaticResource FilterComboBox}" Width="120" Margin="0,0,15,0" SelectedIndex="0">
                     <ComboBoxItem Content="Все"/>
                     <ComboBoxItem Content="Физ. лицо"/>
                     <ComboBoxItem Content="Юр. лицо"/>
@@ -187,8 +217,7 @@
 
                 <TextBlock Text="Статус:" VerticalAlignment="Center" Margin="0,0,5,0"
                            Foreground="{StaticResource TextBrush}" FontSize="13"/>
-                <ComboBox Style="{StaticResource FilterComboBox}" Width="130" Margin="0,0,15,0"
-                          SelectedIndex="0">
+                <ComboBox x:Name="CmbFilterStatus" Style="{StaticResource FilterComboBox}" Width="130" Margin="0,0,15,0" SelectedIndex="0">
                     <ComboBoxItem Content="Все"/>
                     <ComboBoxItem Content="Активен"/>
                     <ComboBoxItem Content="Заблокирован"/>
@@ -197,17 +226,15 @@
 
                 <TextBlock Text="ФИО / Название:" VerticalAlignment="Center" Margin="0,0,5,0"
                            Foreground="{StaticResource TextBrush}" FontSize="13"/>
-                <TextBox Style="{StaticResource FilterTextBox}" Width="180" Margin="0,0,15,0"
-                         x:Name="TxtSearchName"/>
+                <TextBox x:Name="TxtSearchName" Style="{StaticResource FilterTextBox}" Width="180" Margin="0,0,15,0"/>
 
                 <TextBlock Text="ИНН:" VerticalAlignment="Center" Margin="0,0,5,0"
                            Foreground="{StaticResource TextBrush}" FontSize="13"/>
-                <TextBox Style="{StaticResource FilterTextBox}" Width="130" Margin="0,0,15,0"
-                         x:Name="TxtSearchInn"/>
+                <TextBox x:Name="TxtSearchInn" Style="{StaticResource FilterTextBox}" Width="130" Margin="0,0,15,0"/>
 
-                <Button Content="🔍 Найти" Style="{StaticResource ActionButton}" Height="32"
+                <Button x:Name="BtnSearch" Content="🔍 Найти" Style="{StaticResource ActionButton}" Height="32"
                         FontSize="13" Padding="15,0" Margin="0,0,5,0"/>
-                <Button Content="Очистить" Style="{StaticResource ActionButton}" Height="32"
+                <Button x:Name="BtnClear" Content="Очистить" Style="{StaticResource ActionButton}" Height="32"
                         FontSize="13" Padding="15,0" Background="#95A5A6">
                     <Button.Resources>
                         <SolidColorBrush x:Key="Background" Color="#95A5A6"/>
@@ -247,9 +274,9 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <Button x:Name="BtnViewCard" Content="👁 Просмотр карточки" Style="{StaticResource ActionButton}"
                             Height="34" FontSize="13" Padding="15,0"/>
-                    <Button Content="✏ Редактировать" Style="{StaticResource ActionButton}"
+                    <Button x:Name="BtnEdit" Content="✏ Редактировать" Style="{StaticResource ActionButton}"
                             Height="34" FontSize="13" Padding="15,0"/>
-                    <Button Content="🗑 Удалить" Style="{StaticResource ActionButton}"
+                    <Button x:Name="BtnDelete" Content="🗑 Удалить" Style="{StaticResource ActionButton}"
                             Height="34" FontSize="13" Padding="15,0"
                             Background="#C0392B">
                         <Button.Resources>
@@ -258,16 +285,16 @@
                     </Button>
                 </StackPanel>
 
-                <!-- Пагинация (упрощённая) -->
+                <!-- Пагинация -->
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock Text="Стр. 1 из 10" VerticalAlignment="Center"
+                    <TextBlock x:Name="TxtPageInfo" Text="Стр. 1 из 1" VerticalAlignment="Center"
                                Foreground="{StaticResource LightTextBrush}" FontSize="12" Margin="0,0,15,0"/>
-                    <Button Content="◀" Style="{StaticResource PageButton}"/>
-                    <Button Content="1" Style="{StaticResource PageButton}" Background="{StaticResource PrimaryBrush}" Foreground="White"/>
-                    <Button Content="2" Style="{StaticResource PageButton}"/>
-                    <Button Content="3" Style="{StaticResource PageButton}"/>
+                    <Button x:Name="BtnPrevPage" Content="◀" Style="{StaticResource PageButton}"/>
+                    <Button x:Name="BtnPage1" Content="1" Style="{StaticResource PageButton}" Background="{StaticResource PrimaryBrush}" Foreground="White"/>
+                    <Button x:Name="BtnPage2" Content="2" Style="{StaticResource PageButton}"/>
+                    <Button x:Name="BtnPage3" Content="3" Style="{StaticResource PageButton}"/>
                     <Button Content="..." Style="{StaticResource PageButton}" IsEnabled="False"/>
-                    <Button Content="▶" Style="{StaticResource PageButton}"/>
+                    <Button x:Name="BtnNextPage" Content="▶" Style="{StaticResource PageButton}"/>
                 </StackPanel>
             </Grid>
         </Border>

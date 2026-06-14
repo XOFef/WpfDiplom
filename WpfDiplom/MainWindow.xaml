@@ -5,7 +5,6 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Window.Resources>
-        <!-- Кисти -->
         <SolidColorBrush x:Key="PrimaryBrush" Color="#1E3A5F"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#D4AF37"/>
         <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F7FA"/>
@@ -13,7 +12,6 @@
         <SolidColorBrush x:Key="ErrorBrush" Color="#C0392B"/>
         <SolidColorBrush x:Key="PlaceholderBrush" Color="#95A5A6"/>
 
-        <!-- Стиль TextBox с placeholder -->
         <Style TargetType="TextBox" x:Key="LoginTextBox">
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="14"/>
@@ -53,7 +51,6 @@
             </Setter>
         </Style>
 
-        <!-- Стиль PasswordBox с placeholder (управляется из кода) -->
         <Style TargetType="PasswordBox" x:Key="LoginPasswordBox">
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="14"/>
@@ -85,7 +82,6 @@
             </Setter>
         </Style>
 
-        <!-- Кнопка входа -->
         <Style TargetType="Button" x:Key="LoginButton">
             <Setter Property="Height" Value="44"/>
             <Setter Property="FontSize" Value="16"/>
@@ -136,12 +132,9 @@
         </Style>
     </Window.Resources>
 
-    <!-- Основной Grid с фоном -->
     <Grid Background="{StaticResource BackgroundBrush}">
-        <!-- Золотая полоса -->
         <Border Height="6" Background="{StaticResource AccentBrush}" VerticalAlignment="Top"/>
 
-        <!-- Карточка входа -->
         <Border Width="350" Padding="30" Background="White"
                 CornerRadius="8" VerticalAlignment="Center"
                 BorderBrush="#E0E6ED" BorderThickness="1">
@@ -150,43 +143,35 @@
             </Border.Effect>
 
             <StackPanel>
-                
-
-                    <!-- Название банка -->
-                    <TextBlock Text="БАНК «СТАНДАРТ»"
+                <TextBlock Text="БАНК «СТАНДАРТ»"
                            FontSize="18" FontWeight="Bold"
                            Foreground="{StaticResource PrimaryBrush}"
                            HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                    <TextBlock Text="Система учёта клиентов"
+                <TextBlock Text="Система учёта клиентов"
                            FontSize="12" Foreground="#7F8C8D"
                            HorizontalAlignment="Center" Margin="0,0,0,25"/>
 
-                    <!-- Логин -->
-                    <TextBlock Text="Логин" FontSize="13" Foreground="{StaticResource TextBrush}"
+                <TextBlock Text="Логин" FontSize="13" Foreground="{StaticResource TextBrush}"
                            Margin="0,0,0,4"/>
-                    <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}"
+                <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}"
                          Margin="0,0,0,15"/>
 
-                    <!-- Пароль -->
-                    <TextBlock Text="Пароль" FontSize="13" Foreground="{StaticResource TextBrush}"
+                <TextBlock Text="Пароль" FontSize="13" Foreground="{StaticResource TextBrush}"
                            Margin="0,0,0,4"/>
-                    <PasswordBox x:Name="PasswordBoxCtrl" Style="{StaticResource LoginPasswordBox}"
+                <PasswordBox x:Name="PasswordBoxCtrl" Style="{StaticResource LoginPasswordBox}"
                              Margin="0,0,0,20"/>
 
-                    <!-- Кнопка Войти -->
-                    <Button x:Name="LoginButton" Content="Войти"
+                <Button x:Name="LoginButton" Content="Войти"
                         Style="{StaticResource LoginButton}"
                         Click="LoginButton_Click"/>
 
-                    <!-- Ошибка -->
-                    <TextBlock x:Name="ErrorMessage" Text="Неверный логин или пароль"
+                <TextBlock x:Name="ErrorMessage" Text="Неверный логин или пароль"
                            Foreground="{StaticResource ErrorBrush}"
-                           FontSize="12" HorizontalAlignment="Center"
+                           FontSize="10" HorizontalAlignment="Center"
                            Margin="0,10,0,0" Visibility="Collapsed"/>
             </StackPanel>
         </Border>
 
-        <!-- Подвал -->
         <TextBlock Text="Версия 1.0.0.0 | © 2025 Банк «Стандарт»"
                    FontSize="10" Foreground="#95A5A6"
                    HorizontalAlignment="Center" VerticalAlignment="Bottom"

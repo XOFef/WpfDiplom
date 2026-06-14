@@ -5,7 +5,7 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="600" MinWidth="950"
         Background="#F0F2F5">
-    
+
     <Window.Resources>
         <SolidColorBrush x:Key="PrimaryBrush" Color="#1E3A5F"/>
         <SolidColorBrush x:Key="BorderBrush" Color="#D0D5DD"/>
@@ -19,7 +19,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        
         <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}"
                 CornerRadius="4" Padding="12" Margin="0,0,0,8">
             <Grid>
@@ -32,10 +31,10 @@
             </Grid>
         </Border>
 
-        
         <TabControl Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}"
                     BorderThickness="1" Padding="5">
-            
+
+            <!-- Вкладка: Пользователи -->
             <TabItem Header="👥 Пользователи">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
@@ -75,7 +74,7 @@
                 </Grid>
             </TabItem>
 
-            
+            <!-- Вкладка: Роли и права -->
             <TabItem Header="🔑 Роли и права">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
@@ -84,12 +83,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
                         <ComboBox Width="150" Height="28" VerticalContentAlignment="Center"
-                                  SelectedIndex="0" x:Name="CmbRoles">
-                            <ComboBoxItem Content="Оператор"/>
-                            <ComboBoxItem Content="Менеджер"/>
-                            <ComboBoxItem Content="Руководитель"/>
-                            <ComboBoxItem Content="Администратор"/>
-                        </ComboBox>
+                                  x:Name="CmbRoles" SelectionChanged="CmbRoles_SelectionChanged"/>
                         <Button Content="Сохранить права" Width="130" Height="28" Margin="8,0,0,0"
                                 Background="{StaticResource ButtonBrush}" Foreground="White"
                                 BorderThickness="0" Click="BtnSaveRights_Click"/>
@@ -98,17 +92,17 @@
                             CornerRadius="2" Padding="10" Background="White">
                         <StackPanel>
                             <TextBlock Text="Доступ к модулям" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <CheckBox Content="Клиенты (просмотр)" Margin="0,0,0,3" IsChecked="True"/>
-                            <CheckBox Content="Клиенты (создание/редактирование)" Margin="0,0,0,3"/>
-                            <CheckBox Content="Клиенты (удаление)" Margin="0,0,0,3"/>
-                            <CheckBox Content="Отчёты" Margin="0,0,0,3"/>
-                            <CheckBox Content="Администрирование" Margin="0,0,0,3"/>
+                            <CheckBox x:Name="ChkClientsView" Content="Клиенты (просмотр)" Margin="0,0,0,3"/>
+                            <CheckBox x:Name="ChkClientsEdit" Content="Клиенты (создание/редактирование)" Margin="0,0,0,3"/>
+                            <CheckBox x:Name="ChkClientsDelete" Content="Клиенты (удаление)" Margin="0,0,0,3"/>
+                            <CheckBox x:Name="ChkReports" Content="Отчёты" Margin="0,0,0,3"/>
+                            <CheckBox x:Name="ChkAdmin" Content="Администрирование" Margin="0,0,0,3"/>
                         </StackPanel>
                     </Border>
                 </Grid>
             </TabItem>
 
-            
+            <!-- Вкладка: Справочники -->
             <TabItem Header="📚 Справочники">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
@@ -117,7 +111,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
                         <ComboBox Width="180" Height="28" VerticalContentAlignment="Center"
-                                  SelectedIndex="0" x:Name="CmbDictionaryType">
+                                  x:Name="CmbDictionaryType" SelectionChanged="CmbDictionaryType_SelectionChanged">
                             <ComboBoxItem Content="Отделения"/>
                             <ComboBoxItem Content="Типы документов"/>
                             <ComboBoxItem Content="Источники привлечения"/>
@@ -149,7 +143,7 @@
                 </Grid>
             </TabItem>
 
-            
+            <!-- Вкладка: Аудит действий -->
             <TabItem Header="📋 Аудит действий">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
@@ -159,11 +153,7 @@
                     <WrapPanel Grid.Row="0" Margin="0,0,0,8">
                         <StackPanel Margin="0,0,10,5">
                             <TextBlock Text="Пользователь" FontSize="12" Foreground="#555" Margin="0,0,0,2"/>
-                            <ComboBox Width="130" Height="28" x:Name="CmbAuditUser" SelectedIndex="0">
-                                <ComboBoxItem Content="Все"/>
-                                <ComboBoxItem Content="admin"/>
-                                <ComboBoxItem Content="petrova"/>
-                            </ComboBox>
+                            <ComboBox Width="130" Height="28" x:Name="CmbAuditUser" SelectedValuePath="Id" DisplayMemberPath="FullName"/>
                         </StackPanel>
                         <StackPanel Margin="0,0,10,5">
                             <TextBlock Text="Дата с" FontSize="12" Foreground="#555" Margin="0,0,0,2"/>

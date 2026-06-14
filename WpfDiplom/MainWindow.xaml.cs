@@ -1,5 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
+using WpfDiplom.Data.Context;
 
 namespace WpfDiplom
 {
@@ -8,24 +12,6 @@ namespace WpfDiplom
         public MainWindow()
         {
             InitializeComponent();
-
-            PasswordBoxCtrl.Loaded += (s, e) => UpdatePasswordPlaceholder(null, null);
-            PasswordBoxCtrl.PasswordChanged += UpdatePasswordPlaceholder;
-            PasswordBoxCtrl.GotFocus += UpdatePasswordPlaceholder;
-            PasswordBoxCtrl.LostFocus += UpdatePasswordPlaceholder;
-        }
-
-        private void UpdatePasswordPlaceholder(object sender, RoutedEventArgs e)
-        {
-            if (PasswordBoxCtrl == null) return;
-            var placeholder = PasswordBoxCtrl.Template?.FindName("Placeholder", PasswordBoxCtrl) as TextBlock;
-            if (placeholder != null)
-            {
-                placeholder.Visibility =
-                    string.IsNullOrEmpty(PasswordBoxCtrl.Password) && !PasswordBoxCtrl.IsFocused
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-            }
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -33,18 +19,32 @@ namespace WpfDiplom
             string login = LoginTextBox.Text.Trim();
             string password = PasswordBoxCtrl.Password;
 
-            // --- Тестовый вход ---
-            if (login == "admin" && password == "123")
+            using (var db = new AppDbContext())
             {
-                // Открываем главное окно
-                DashboardWindow dashboard = new DashboardWindow();
-                dashboard.Show();
-                this.Close();
+                var user = db.Users.FirstOrDefault(u => u.Login == login && u.IsActive);
+                if (user != null && VerifyPassword(password, user.PasswordHash))
+                {
+                    App.CurrentUser = user;
+                    App.LogAction("Login", $"Пользователь {user.Login} вошёл в систему", "", "");
+                    DashboardWindow dashboard = new DashboardWindow();
+                    dashboard.Show();
+                    this.Close();
+                }
+                else
+                {
+                    ErrorMessage.Text = "Неверный логин или пароль,\nили учётная запись заблокирована";
+                    ErrorMessage.Visibility = Visibility.Visible;
+                    ErrorMessage.FontSize = 12;
+                }
             }
-            else
+        }
+
+        private bool VerifyPassword(string password, string hash)
+        {
+            using (var sha256 = SHA256.Create())
             {
-                ErrorMessage.Text = "Неверный логин или пароль";
-                ErrorMessage.Visibility = Visibility.Visible;
+                var computedHash = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
+                return computedHash == hash;
             }
         }
     }
